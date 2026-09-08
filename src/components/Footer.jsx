@@ -190,7 +190,6 @@ export default function Footer() {
         {/* Bottom Copyright */}
         <div className="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs sm:text-sm text-white/50 text-center sm:text-left">
           <p>© 2026 Rewan Tech Solutions. All rights reserved.</p>
-          <p>Made with ❤️ for aspiring professionals</p>
         </div>
       </div>
     </footer>
