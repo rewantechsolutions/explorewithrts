@@ -197,7 +197,7 @@ export const faqs = [
   },
   {
     question: 'How can I contact support?',
-    answer: 'You can reach us via the Contact form, WhatsApp, email (support@rewantech.com), or the AI Mentor chatbot available 24/7 on the platform.',
+    answer: 'You can reach us via the Contact form, WhatsApp, email (info@explorewithrts.com), or the AI Mentor chatbot available 24/7 on the platform.',
   },
 ]
 

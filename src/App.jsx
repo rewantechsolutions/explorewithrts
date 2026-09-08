@@ -1,8 +1,10 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import AIMentor from './components/AIMentor'
+import LoginModal from './components/LoginModal'
 import Home from './pages/Home'
 import Courses from './pages/Courses'
 import About from './pages/About'
@@ -16,7 +18,7 @@ import CareerRoadmap from './pages/CareerRoadmap'
 import Jobs from './pages/Jobs'
 import CourseDetail from './pages/CourseDetail'
 
-function App() {
+function AppContent() {
   const location = useLocation()
   const isDashboard = location.pathname.includes('dashboard') || location.pathname.includes('admin')
 
@@ -43,7 +45,16 @@ function App() {
       </main>
       {!isDashboard && <Footer />}
       <AIMentor />
+      <LoginModal />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
 

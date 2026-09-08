@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
+import { FiMail, FiPhone, FiMapPin, FiExternalLink, FiNavigation } from 'react-icons/fi'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
@@ -24,39 +24,67 @@ export default function Contact() {
         <div className="grid lg:grid-cols-2 gap-10">
           <div className="space-y-6">
             <div className="bg-white rounded-2xl p-6 shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
                 <FiMapPin size={20} />
               </div>
               <div>
                 <h3 className="font-bold text-darkNavy">Address</h3>
-                <p className="text-sm text-darkNavy/60 mt-1">123 Tech Park, Sector 15, Gurugram, Haryana 122001</p>
+                <p className="text-sm text-darkNavy/70 mt-1">SS-909,Sector-G,LDA Colony,(226012) Lucknow(U.P)</p>
               </div>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
                 <FiMail size={20} />
               </div>
               <div>
-                <h3 className="font-bold text-darkNavy">Email</h3>
-                <p className="text-sm text-darkNavy/60 mt-1">support@rewantech.com</p>
+                <h3 className="font-bold text-darkNavy">Official Emails</h3>
+                <div className="mt-1 space-y-1">
+                  <a href="mailto:contact@explorewithrts.com" className="text-sm text-primary hover:underline block font-medium">
+                    contact@explorewithrts.com
+                  </a>
+                  <a href="mailto:info@explorewithrts.com" className="text-sm text-primary/85 hover:underline block">
+                    info@explorewithrts.com
+                  </a>
+                </div>
               </div>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
                 <FiPhone size={20} />
               </div>
               <div>
                 <h3 className="font-bold text-darkNavy">Phone</h3>
-                <p className="text-sm text-darkNavy/60 mt-1">+91 98765 43210</p>
+                <a href="tel:+918545098444" className="text-sm text-primary hover:underline mt-1 block font-medium">
+                  +91 8545098444
+                </a>
               </div>
             </div>
-            <div className="bg-white rounded-2xl overflow-hidden shadow-sm h-64">
-              <iframe
-                title="map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.2233913121413!2d77.0365!3d28.4595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDI3JzM0LjIiTiA3N8KwMDInMTEuNCJF!5e0!3m2!1sen!2sin!4v1234567890"
-                className="w-full h-full border-0"
-                loading="lazy"
-              />
+            <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+              <div className="h-64 sm:h-72 w-full relative">
+                <iframe
+                  title="Rewan Tech Solutions Location - SS-909 Sector-G LDA Colony Lucknow"
+                  src="https://maps.google.com/maps?q=SS-909%2C%20Sector-G%2C%20LDA%20Colony%2C%20Lucknow%2C%20Uttar%20Pradesh%20226012&t=&z=16&ie=UTF8&iwloc=B&output=embed"
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-3.5 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between text-xs">
+                <span className="text-darkNavy/70 font-medium flex items-center gap-1.5 truncate">
+                  <FiMapPin className="text-primary shrink-0 text-sm" />
+                  <span className="truncate">Sector-G, LDA Colony, Lucknow (226012)</span>
+                </span>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=SS-909%2C+Sector-G%2C+LDA+Colony%2C+Lucknow%2C+Uttar+Pradesh+226012"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-primary font-semibold hover:underline shrink-0 ml-2"
+                >
+                  <FiNavigation className="text-xs" />
+                  <span>Open in Maps</span>
+                  <FiExternalLink className="text-[10px]" />
+                </a>
+              </div>
             </div>
           </div>
 

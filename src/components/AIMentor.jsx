@@ -44,34 +44,39 @@ export default function AIMentor() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-premium flex items-center justify-center ${isOpen ? 'hidden' : ''}`}
+        aria-label="Open AI Career Mentor"
+        className={`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-premium flex items-center justify-center cursor-pointer ${isOpen ? 'hidden' : ''}`}
       >
-        <Bot size={24} />
-        <span className="absolute -top-1 -right-1 w-4 h-4 bg-gold rounded-full animate-pulse" />
+        <Bot size={22} className="sm:w-6 sm:h-6" />
+        <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-gold rounded-full animate-pulse" />
       </motion.button>
 
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[520px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
+            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+            className="fixed bottom-3 sm:bottom-6 right-3 sm:right-6 z-50 w-[360px] max-w-[calc(100vw-1.5rem)] h-[480px] sm:h-[520px] max-h-[calc(100vh-4.5rem)] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-primary to-secondary p-4 text-white flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <Bot size={20} />
+            <div className="bg-gradient-to-r from-primary to-secondary p-3.5 sm:p-4 text-white flex items-center justify-between">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                  <Bot size={18} className="sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">AI Career Mentor</h3>
-                  <p className="text-xs text-white/80">Always here to help</p>
+                  <h3 className="font-semibold text-sm sm:text-base leading-tight">AI Career Mentor</h3>
+                  <p className="text-[11px] sm:text-xs text-white/80">Always here to help</p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-white/20 rounded-lg">
-                <FiX size={20} />
+              <button 
+                onClick={() => setIsOpen(false)} 
+                aria-label="Close AI Mentor"
+                className="w-9 h-9 flex items-center justify-center hover:bg-white/20 rounded-lg transition-colors cursor-pointer"
+              >
+                <FiX size={18} />
               </button>
             </div>
 

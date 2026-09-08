@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { FiArrowRight, FiPlay, FiStar, FiUsers, FiBookOpen, FiAward } from 'react-icons/fi'
+import { Link, useNavigate } from 'react-router-dom'
+import { FiArrowRight, FiPlay, FiStar, FiUsers, FiBookOpen, FiAward, FiLock } from 'react-icons/fi'
 import { categories, courses, testimonials, stats, partners } from '../data/courses'
 import herobg from '../assets/herobg.jpg'
 import herovideo from '../assets/herovideo.mp4'
 
 
 import { useEffect, useState, useRef } from 'react'
+import EnrollmentModal from '../components/EnrollmentModal'
+import { useAuth } from '../context/AuthContext'
 import {
   UserPlus,
   BookOpen,
@@ -89,6 +91,28 @@ const itemVariants = {
 }
 
 export default function Home() {
+  const [enrollModalCourse, setEnrollModalCourse] = useState(null)
+  const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false)
+  const { isAuthenticated, openLoginModal } = useAuth()
+  const navigate = useNavigate()
+
+  const handleExploreCourses = (targetPath = '/courses') => {
+    if (!isAuthenticated) {
+      openLoginModal(targetPath)
+    } else {
+      navigate(targetPath)
+    }
+  }
+
+  const handleEnrollClick = (course) => {
+    if (!isAuthenticated) {
+      openLoginModal(`/courses/${course.id}`)
+      return
+    }
+    setEnrollModalCourse(course)
+    setIsEnrollModalOpen(true)
+  }
+
   return (
     <div className="overflow-hidden">
       {/* ========== HERO ========== */}
@@ -129,14 +153,15 @@ export default function Home() {
               and land your dream job with 95% placement success rate.
             </motion.p>
 
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mb-10">
-              <Link
-                to="/courses"
-                className="btn-primary flex items-center gap-2 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10 w-full sm:w-auto">
+              <button
+                onClick={() => handleExploreCourses('/courses')}
+                className="btn-primary flex items-center justify-center gap-2 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 w-full sm:w-auto cursor-pointer"
               >
-                Explore Courses <FiArrowRight />
-              </Link>
-              <button className="btn-secondary flex items-center gap-2 hover:bg-primary hover:text-white transition-all duration-300">
+                {!isAuthenticated && <FiLock className="text-amber-200" size={16} />}
+                <span>Explore Courses</span> <FiArrowRight />
+              </button>
+              <button className="btn-secondary flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all duration-300 w-full sm:w-auto cursor-pointer">
                 <FiPlay /> Free Demo Class
               </button>
             </motion.div>
@@ -255,7 +280,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
             {stats.map((stat, i) => {
               const Icon = stat.icon
               return (
@@ -265,16 +290,16 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="group relative overflow-hidden rounded-3xl bg-white/10 backdrop-blur-xl border border-white/10 p-8 text-center shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-gold/40 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)]"
+                  className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white/10 backdrop-blur-xl border border-white/10 p-4 sm:p-8 text-center shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-gold/40 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)]"
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-gold/10 to-transparent" />
-                  <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-white/10 flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:bg-gold/20">
-                    <Icon size={30} className="text-gold" />
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-5 rounded-xl sm:rounded-2xl bg-white/10 flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:bg-gold/20">
+                    <Icon className="text-gold text-xl sm:text-3xl" />
                   </div>
-                  <h3 className="text-4xl font-extrabold text-white mb-2">
+                  <h3 className="text-2xl sm:text-4xl font-extrabold text-white mb-1 sm:mb-2">
                     <Counter value={stat.value} suffix={stat.suffix} />
                   </h3>
-                  <p className="text-white/70 font-medium">{stat.label}</p>
+                  <p className="text-white/70 font-medium text-xs sm:text-base">{stat.label}</p>
                 </motion.div>
               )
             })}
@@ -338,12 +363,13 @@ export default function Home() {
               <p className="text-primary font-semibold mb-2 tracking-wide">FEATURED COURSES</p>
               <h2 className="text-3xl md:text-4xl font-bold text-darkNavy">Most Popular Programs</h2>
             </div>
-            <Link
-              to="/courses"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-primary/20 text-primary font-medium text-sm hover:bg-primary hover:text-white transition-all duration-300"
+            <button
+              onClick={() => handleExploreCourses('/courses')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-primary/20 text-primary font-medium text-sm hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer"
             >
-              View All Courses <FiArrowRight size={16} />
-            </Link>
+              {!isAuthenticated && <FiLock size={14} className="text-amber-500" />}
+              <span>View All Courses</span> <FiArrowRight size={16} />
+            </button>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
@@ -356,20 +382,34 @@ export default function Home() {
                 transition={{ delay: i * 0.08 }}
                 className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-primary/15"
               >
-                <div className="relative overflow-hidden aspect-[16/10]">
+                <div
+                  className="relative overflow-hidden aspect-[16/10] cursor-pointer"
+                  onClick={() => handleExploreCourses(`/courses/${course.id}`)}
+                >
                   <img
                     src={course.image}
                     alt={course.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
+                      !isAuthenticated ? 'filter blur-[1px]' : ''
+                    }`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-3 left-3 px-2.5 py-1 bg-white/95 backdrop-blur rounded-lg text-xs font-semibold text-primary shadow-sm">
                     {course.category}
                   </div>
+                  {!isAuthenticated && (
+                    <div className="absolute top-3 right-3 px-2 py-1 bg-amber-500/90 text-white rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-sm">
+                      <FiLock size={11} />
+                      <span>Locked</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-6">
-                  <h3 className="font-bold text-darkNavy mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+                  <h3
+                    onClick={() => handleExploreCourses(`/courses/${course.id}`)}
+                    className="font-bold text-darkNavy mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300 cursor-pointer"
+                  >
                     {course.title}
                   </h3>
                   <p className="text-sm text-darkNavy/55 mb-4">{course.instructor}</p>
@@ -386,14 +426,15 @@ export default function Home() {
 
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                     <div className="flex items-baseline gap-2">
-                      
+                      <span className="text-xl font-bold text-primary">₹{course.price.toLocaleString()}</span>
+                      <span className="text-xs text-darkNavy/40 line-through">₹{course.originalPrice.toLocaleString()}</span>
                     </div>
-                    <Link
-                      to={`/courses/${course.id}`}
-                      className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-xl hover:bg-secondary transition-colors duration-300 shadow-sm hover:shadow-md"
+                    <button
+                      onClick={() => handleEnrollClick(course)}
+                      className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-xl hover:bg-secondary transition-colors duration-300 shadow-sm hover:shadow-md cursor-pointer"
                     >
                       Enroll Now
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -507,7 +548,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 lg:gap-6">
               {journeySteps.map((step, i) => {
                 const Icon = step.icon
                 return (
@@ -519,15 +560,14 @@ export default function Home() {
                     transition={{ delay: i * 0.12 }}
                     className="group relative"
                   >
-                    <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-center shadow-xl transition-all duration-500 group-hover:-translate-y-2 group-hover:border-gold/50 group-hover:shadow-[0_0_40px_rgba(255,215,0,0.2)]">
-                      <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-r from-gold to-yellow-400 text-darkNavy font-bold flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:scale-110">
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-center shadow-xl transition-all duration-500 group-hover:-translate-y-2 group-hover:border-gold/50 group-hover:shadow-[0_0_40px_rgba(255,215,0,0.2)] h-full flex flex-col items-center justify-center">
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-r from-gold to-yellow-400 text-darkNavy font-bold flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:scale-110 text-sm sm:text-base">
                         {i + 1}
                       </div>
                       <Icon
-                        size={26}
-                        className="mx-auto mb-3 text-gold transition-all duration-500 group-hover:rotate-12 group-hover:scale-110"
+                        className="mx-auto mb-2 sm:mb-3 text-gold text-xl sm:text-2xl transition-all duration-500 group-hover:rotate-12 group-hover:scale-110"
                       />
-                      <h3 className="font-semibold text-base">{step.title}</h3>
+                      <h3 className="font-semibold text-xs sm:text-base">{step.title}</h3>
                     </div>
                   </motion.div>
                 )
@@ -634,12 +674,13 @@ export default function Home() {
               Join 10,000+ students who have already started their journey to success.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                to="/courses"
-                className="btn-gold shadow-lg shadow-gold/20 hover:shadow-xl hover:shadow-gold/30 transition-all duration-300"
+              <button
+                onClick={() => handleExploreCourses('/courses')}
+                className="btn-gold shadow-lg shadow-gold/20 hover:shadow-xl hover:shadow-gold/30 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2"
               >
-                Explore Courses
-              </Link>
+                {!isAuthenticated && <FiLock size={16} />}
+                <span>Explore Courses</span>
+              </button>
               <Link
                 to="/career-roadmap"
                 className="px-7 py-3.5 border-2 border-white/80 text-white font-semibold rounded-xl hover:bg-white hover:text-primary transition-all duration-300"
@@ -650,6 +691,13 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Course Enrollment Modal */}
+      <EnrollmentModal
+        course={enrollModalCourse}
+        isOpen={isEnrollModalOpen}
+        onClose={() => setIsEnrollModalOpen(false)}
+      />
     </div>
   )
 }

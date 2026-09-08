@@ -1,0 +1,6 @@
+{
+  "name": "Explore With RTS",
+  "description": "Explore With RTS - Premium Learning Management System with AI career tools, placement readiness, and industry-ready courses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
