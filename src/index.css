@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-darkNavy bg-white antialiased;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass;
+  }
+  .glass-dark {
+    @apply bg-darkNavy/80 backdrop-blur-xl border border-white/10;
+  }
+  .btn-primary {
+    @apply bg-primary hover:bg-secondary text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-premium hover:-translate-y-0.5;
+  }
+  .btn-secondary {
+    @apply bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300;
+  }
+  .btn-gold {
+    @apply bg-gold hover:bg-yellow-500 text-darkNavy font-semibold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg;
+  }
+  .section-padding {
+    @apply py-16 md:py-24 px-4 sm:px-6 lg:px-8;
+  }
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-premium;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #EAF3FF;
+}
+::-webkit-scrollbar-thumb {
+  background: #0A3D91;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #174EA6;
+}
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.partner-scroll {
+  animation: scrollRight 35s linear infinite;
+}
+
+.partner-scroll:hover {
+  animation-play-state: paused;
+}
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-card {
+  animation: floating 4s ease-in-out infinite;
+}
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float-card {
+  animation: floatCard 4s ease-in-out infinite;
+}
